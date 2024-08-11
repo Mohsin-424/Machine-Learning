@@ -7,8 +7,8 @@ from sklearn.linear_model import LinearRegression
 
 # Loading the dataset
 data = pd.read_csv('Salary_Data.csv')
-X = data.iloc[:,:-1].values # X is predictor
-y = data.iloc[:,-1].values # Y is response
+X = data.iloc[:, :-1].values  # X is predictor
+y = data.iloc[:, -1].values  # Y is response
 
 # Split dataset into test and training set
 
@@ -22,23 +22,20 @@ regressor.fit(X_train, y_train)
 # Predicting test set results
 
 y_predicted = regressor.predict(X_test)
-print(y_predicted)
 
-# Visualizing the Training set results
+# Visualizing both Training and Test set results
+plt.figure(figsize=(10, 6))
 
-plt.scatter(X_train, y_train, color='red')
-alpha = regressor.predict(X_train)
-plt.plot(X_train, alpha, color='#00FF00')
-plt.title('Salary vs Experience (Training set)')
+# Training set results
+plt.scatter(X_train, y_train, color='red', label='Training set')
+plt.plot(X_train, regressor.predict(X_train), color='green', label='Regression line (Training set)')
+
+# Test set results
+plt.scatter(X_test, y_test, color='blue', label='Test set')
+plt.plot(X_test, y_predicted, color='black', linestyle='dashed', label='Regression line (Test set)')
+
+plt.title('Salary vs Experience')
 plt.xlabel('Years of Experience')
 plt.ylabel('Salary')
-plt.show()
-
-# Visualizing the Test set results
-plt.scatter(X_test, y_test, color='blue')
-alpha = regressor.predict(X_train)
-plt.plot(X_train, alpha, color='#000000')
-plt.title('Salary vs Experience (Test set)')
-plt.xlabel('Years of Experience')
-plt.ylabel('Salary')
+plt.legend()
 plt.show()
